@@ -1,1 +1,1 @@
-import './components/App';
+import './containers/App';
