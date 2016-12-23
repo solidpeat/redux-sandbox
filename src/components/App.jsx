@@ -1,32 +1,16 @@
 import React from 'react';
 import { render } from 'react-dom';
-import ProductsList from './ProductsList';
-import ProductItem from './ProductItem';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
-const products = [
-  {
-    id: 1,
-    title: 'masquerade',
-    price: 100,
-    inventory: 8,
-  },
-  {
-    id: 2,
-    title: 'BOARDING',
-    price: 170,
-    inventory: 13,
-  },
-];
+import reducer from '../reducers';
+import ProductsContainer from '../containers/ProductsContainer';
+
+const store = createStore(reducer);
 
 export default render(
-  <ProductsList title="Products">
-    {products.map(product =>
-      <ProductItem
-        key={product.id}
-        product={product}
-        onAddToCartClicked={() => console.log(product.id)}
-      />,
-    )}
-  </ProductsList>,
+  <Provider store={store}>
+    <ProductsContainer />
+  </Provider>,
   document.getElementById('root'),
 );
