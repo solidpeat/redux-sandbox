@@ -1,12 +1,18 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import createLogger from 'redux-logger';
 
 import reducer from '../reducers';
 import ProductsContainer from '../containers/ProductsContainer';
 
-const store = createStore(reducer);
+const middleware = [thunk, createLogger()];
+const store = createStore(
+  reducer,
+  applyMiddleware(...middleware),
+);
 
 export default render(
   <Provider store={store}>
