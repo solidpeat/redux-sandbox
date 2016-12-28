@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { getVisibleProducts } from '../reducers/products';
 import ProductItem from '../components/ProductItem';
 import ProductsList from '../components/ProductsList';
 
@@ -25,7 +26,7 @@ ProductsContainer.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  products: state.products,
+  products: getVisibleProducts(state.products),
 });
 
 export default connect(

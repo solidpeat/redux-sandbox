@@ -6,6 +6,7 @@ import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 
 import reducer from '../reducers';
+import { getAllProducts } from '../actions';
 import ProductsContainer from '../containers/ProductsContainer';
 
 const middleware = [thunk, createLogger()];
@@ -13,6 +14,8 @@ const store = createStore(
   reducer,
   applyMiddleware(...middleware),
 );
+
+store.dispatch(getAllProducts());
 
 export default render(
   <Provider store={store}>
