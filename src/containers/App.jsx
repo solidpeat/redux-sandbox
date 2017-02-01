@@ -8,6 +8,7 @@ import createLogger from 'redux-logger';
 import reducer from '../reducers';
 import { getAllProducts } from '../actions';
 import ProductsContainer from '../containers/ProductsContainer';
+import CartContainer from '../containers/CartContainer';
 
 const middleware = [thunk, createLogger()];
 const store = createStore(
@@ -19,7 +20,11 @@ store.dispatch(getAllProducts());
 
 export default render(
   <Provider store={store}>
-    <ProductsContainer />
+    <div>
+      <ProductsContainer />
+      <hr />
+      <CartContainer />
+    </div>
   </Provider>,
   document.getElementById('root'),
 );
