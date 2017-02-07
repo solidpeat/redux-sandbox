@@ -1,4 +1,8 @@
-import { ADD_TO_CART } from '../constants/ActionTypes';
+import {
+  ADD_TO_CART,
+  CHECKOUT_REQUEST,
+  CHECKOUT_FAILURE,
+} from '../constants/ActionTypes';
 
 const initialState = {
   addedIds: [],
@@ -38,6 +42,10 @@ export const getAddedIds = state => state.addedIds;
 
 const cart = (state = initialState, action) => {
   switch (action.type) {
+    case CHECKOUT_REQUEST:
+      return initialState;
+    case CHECKOUT_FAILURE:
+      return action.cart;
     default:
       return {
         addedIds: addedIds(state.addedIds, action),
