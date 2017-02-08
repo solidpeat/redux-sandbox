@@ -11,7 +11,7 @@ const ProductItem = ({ product, onAddToCartClicked }) => (
       onClick={onAddToCartClicked}
       disabled={product.inventory > 0 ? '' : 'disabled'}
     >
-      {product.inventory > 0 ? 'Add to cart' : 'Sold Out'}
+      {product.inventory > 0 ? 'カートに入れる' : '売り切れ'}
     </button>
   </div>
 );

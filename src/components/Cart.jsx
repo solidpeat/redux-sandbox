@@ -13,19 +13,19 @@ const Cart = ({ products, total, onCheckoutClicked }) => {
       />,
     )
   ) : (
-    <em>Please add some products to cart.</em>
+    <em>カートが空です。</em>
   );
 
   return (
     <div>
-      <h3>Your Cart</h3>
+      <h3>カート</h3>
       <div>{nodes}</div>
-      <p>Total: &#36;{total}</p>
+      <p>合計: {total}円</p>
       <button
         onClick={onCheckoutClicked}
         disabled={hasProducts ? '' : 'disabled'}
       >
-        Checkout
+        購入
       </button>
     </div>
   );
