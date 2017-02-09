@@ -22,6 +22,10 @@ module.exports = {
       {
         test: /\.pug$/,
         loader: "pug?pretty=true"
+      },
+      {
+        test: /\.json$/,
+        loader: "json"
       }
     ]
   },
