@@ -8,9 +8,10 @@ import { Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 
 import reducer from '../reducers';
+import api from '../middleware/api';
 import routes from '../routes';
 
-const middleware = [thunk, createLogger()];
+const middleware = [thunk, api, createLogger()];
 const store = createStore(
   reducer,
   applyMiddleware(...middleware),

@@ -95,7 +95,10 @@ UserPage.propTypes = {
     pageCount: PropTypes.number,
     ids: PropTypes.arrayOf(PropTypes.string),
   }),
-  starredRepos: PropTypes.arrayOf(PropTypes.string).isRequired,
+  starredRepos: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string,
+  })).isRequired,
   starredRepoOwners: PropTypes.arrayOf(PropTypes.shape({
     login: PropTypes.string.isRequired,
     avatarUrl: PropTypes.string.isRequired,

@@ -43,12 +43,13 @@ List.propTypes = {
   loadingLabel: PropTypes.string.isRequired,
   pageCount: PropTypes.number,
   renderItem: PropTypes.func.isRequired,
-  // 要確認
-  items: PropTypes.arrayOf(PropTypes.shape({
+  // repoとownerの配列なので両方の要素をもたせてる
+  // isRequiredはつけない
+  items: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
     description: PropTypes.string,
-    login: PropTypes.string.isRequired,
-  })).isRequired,
+    login: PropTypes.string,
+  }))).isRequired,
   isFetching: PropTypes.bool.isRequired,
   onLoadMoreClick: PropTypes.func.isRequired,
   nextPageUrl: PropTypes.string,
