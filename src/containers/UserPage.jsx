@@ -50,7 +50,7 @@ class UserPage extends Component {
         <List
           renderItem={UserPage.renderRepo}
           items={zip(starredRepos, starredRepoOwners)}
-          onLoadMoreClick={this.handleLoadMoreClick}
+          onLoadMoreClick={event => this.handleLoadMoreClick(event)}
           loadingLabel={`Loading ${login}'s starred...`}
           {...starredPagination}
         />
