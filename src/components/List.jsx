@@ -43,13 +43,9 @@ List.propTypes = {
   loadingLabel: PropTypes.string.isRequired,
   pageCount: PropTypes.number,
   renderItem: PropTypes.func.isRequired,
-  // repoとownerの配列なので両方の要素をもたせてる
-  // isRequiredはつけない
-  items: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string,
-    description: PropTypes.string,
-    login: PropTypes.string,
-  }))).isRequired,
+  // 場合によっていろんな形でくるのでanyにした
+  // PropTypes.arrayはダメやけどarrayOf(PropTypes.any)はOKのようだ
+  items: PropTypes.arrayOf(PropTypes.any).isRequired,
   isFetching: PropTypes.bool.isRequired,
   onLoadMoreClick: PropTypes.func.isRequired,
   nextPageUrl: PropTypes.string,
