@@ -20,7 +20,7 @@ store.dispatch(getAllProducts());
 
 export default render(
   <Provider store={store}>
-    <div>
+    <div className="container">
       <ProductsContainer />
       <hr />
       <CartContainer />

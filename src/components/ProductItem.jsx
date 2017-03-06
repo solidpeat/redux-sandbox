@@ -1,19 +1,20 @@
 import React, { PropTypes } from 'react';
+import { Panel, Button } from 'react-bootstrap';
 import Product from './Product';
 
 const ProductItem = ({ product, onAddToCartClicked }) => (
-  <div style={{ marginBottom: 20 }}>
+  <Panel>
     <Product
       title={product.title}
       price={product.price}
     />
-    <button
+    <Button
       onClick={onAddToCartClicked}
       disabled={product.inventory > 0 ? '' : 'disabled'}
     >
       {product.inventory > 0 ? 'カートに入れる' : '売り切れ'}
-    </button>
-  </div>
+    </Button>
+  </Panel>
 );
 
 ProductItem.propTypes = {

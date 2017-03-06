@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 
 const Product = ({ price, quantity, title }) => (
-  <div>
+  <p>
     {title} - {price}円{quantity ? ` x ${quantity}` : null}
-  </div>
+  </p>
 );
 
 Product.propTypes = {

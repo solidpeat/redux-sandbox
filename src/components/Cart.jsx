@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { Button } from 'react-bootstrap';
 import Product from './Product';
 
 const Cart = ({ products, total, onCheckoutClicked }) => {
@@ -21,12 +22,13 @@ const Cart = ({ products, total, onCheckoutClicked }) => {
       <h3>カート</h3>
       <div>{nodes}</div>
       <p>合計: {total}円</p>
-      <button
+      <Button
+        bsStyle="success"
         onClick={onCheckoutClicked}
         disabled={hasProducts ? '' : 'disabled'}
       >
         購入
-      </button>
+      </Button>
     </div>
   );
 };
