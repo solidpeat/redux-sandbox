@@ -1,4 +1,11 @@
-import { configure } from '@kadira/storybook';
+import { configure, addDecorator } from '@kadira/storybook';
+import React from 'react';
+
+addDecorator((story) => (
+  <div style={{padding: '15px'}}>
+    {story()}
+  </div>
+));
 
 const req = require.context('../src/components', true, /.stories.js$/)
 
