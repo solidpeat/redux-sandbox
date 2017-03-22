@@ -1,5 +1,5 @@
 import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
+import { storiesOf, action, linkTo } from '@kadira/storybook';
 import Cart from './Cart';
 
 storiesOf('Cart', module)
@@ -12,7 +12,7 @@ storiesOf('Cart', module)
       <Cart
         products={products}
         total="500"
-        onCheckoutClicked={action('onCheckoutClicked')}
+        onCheckoutClicked={linkTo('Cart', 'empty')}
       />
     );
   })
