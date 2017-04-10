@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-polyfill": "^6.23.0",
     "humps": "^1.1.0",
     "lodash": "^4.17.4",
     "normalizr": "^2.2.1",
@@ -23,6 +24,7 @@
     "react-router-redux": "^4.0.7",
     "redux": "^3.6.0",
     "redux-logger": "^2.7.4",
+    "redux-saga": "^0.14.6",
     "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
