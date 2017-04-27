@@ -6,9 +6,8 @@ import User from '../components/User';
 import Repo from '../components/Repo';
 import List from '../components/List';
 
-const loadData = ({ login, loadUserAction, loadStarredAction }) => {
+const loadData = ({ login, loadUserAction }) => {
   loadUserAction(login, ['name']);
-  loadStarredAction(login);
 };
 
 class UserPage extends Component {
