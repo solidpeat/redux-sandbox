@@ -96,7 +96,17 @@ const loadRepoPage = (action$, store) =>
       loadStargazers(action, store),
     ));
 
+const loadMoreStarred = (action$, store) =>
+  action$.ofType(actions.LOAD_MORE_STARRED)
+    .mergeMap(action => loadStarred(action, store, true));
+
+const loadMoreStargazers = (action$, store) =>
+  action$.ofType(actions.LOAD_MORE_STARGAZERS)
+    .mergeMap(action => loadStargazers(action, store, true));
+
 export default combineEpics(
   loadUserPage,
   loadRepoPage,
+  loadMoreStarred,
+  loadMoreStargazers,
 );
