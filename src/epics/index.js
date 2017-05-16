@@ -7,6 +7,7 @@ import { getUser, getRepo, getStarredByUser, getStargazersByRepo } from '../redu
 const { user, repo, starred, stargazers } = actions;
 
 const firstPageStarredUrl = login => `users/${login}/starred`;
+const firstPageStargazersUrl = fullName => `repos/${fullName}/stargazers`;
 
 function fetchEntity(entity, apiFn, id, url) {
   return Observable.merge(
@@ -37,8 +38,19 @@ const loadUser = (action, store) =>
           !Object.prototype.hasOwnProperty.call(gotUser, key))
       );
     })
-    .mergeMap(action =>
-      fetchUser(action.login));
+    .mergeMap(action => fetchUser(action.login));
+
+const loadRepo = (action, store) =>
+  Observable.of(action)
+    .filter(action => {
+      const gotRepo = getRepo(store.getState(), action.fullName);
+      return (
+        !gotRepo
+        || action.requiredFields.some(key =>
+          !Object.prototype.hasOwnProperty.call(gotRepo, key))
+      );
+    })
+    .mergeMap(action => fetchRepo(action.fullName));
 
 const loadStarred = (action, store, loadMore) =>
   Observable.of(action)
@@ -54,6 +66,22 @@ const loadStarred = (action, store, loadMore) =>
       );
     });
 
+const loadStargazers = (action, store, loadMore) =>
+  Observable.of(action)
+    .filter(action => {
+      const stargazersByRepo = getStargazersByRepo(store.getState(), action.fullName);
+      return !stargazersByRepo || !stargazersByRepo.pageCount || loadMore;
+    })
+    .mergeMap(action => {
+      const stargazersByRepo = getStargazersByRepo(store.getState(), action.fullName);
+      return fetchStargazers(
+        action.fullName,
+        stargazersByRepo.nextPageUrl || firstPageStargazersUrl(action.fullName),
+      );
+    });
+
+// ******************************************************************************/
+
 const loadUserPage = (action$, store) =>
   action$.ofType(actions.LOAD_USER_PAGE)
     .mergeMap(action => Observable.merge(
@@ -61,6 +89,14 @@ const loadUserPage = (action$, store) =>
       loadStarred(action, store),
     ));
 
+const loadRepoPage = (action$, store) =>
+  action$.ofType(actions.LOAD_REPO_PAGE)
+    .mergeMap(action => Observable.merge(
+      loadRepo(action, store),
+      loadStargazers(action, store),
+    ));
+
 export default combineEpics(
-  loadUserPage
+  loadUserPage,
+  loadRepoPage,
 );
