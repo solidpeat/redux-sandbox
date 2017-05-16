@@ -10,7 +10,7 @@ const firstPageStarredUrl = login => `users/${login}/starred`;
 
 function fetchEntity(entity, apiFn, id, url) {
   return Observable.merge(
-    Observable.from([entity.request(id)]),
+    Observable.of(entity.request(id)),
     apiFn(url || id)
       .then(result => {
         if (result.response) {
