@@ -8,25 +8,30 @@ const { user, repo, starred, stargazers } = actions;
 
 const firstPageStarredUrl = login => `users/${login}/starred`;
 
+function fetchEntity(entity, apiFn, id, url) {
+  return Observable.merge(
+    Observable.from([entity.request(id)]),
+    apiFn(url || id)
+      .then(result => {
+        if (result.response) {
+          return entity.success(id, result.response);
+        } else if (result.error) {
+          return entity.failure(id, result.error);
+        }
+      }),
+  );
+}
+
+const fetchUser = fetchEntity.bind(null, user, api.fetchUser);
+const fetchRepo = fetchEntity.bind(null, repo, api.fetchRepo);
+const fetchStarred = fetchEntity.bind(null, starred, api.fetchStarred);
+const fetchStargazers = fetchEntity.bind(null, stargazers, api.fetchStargazers);
+
 const loadUserPage = action$ =>
   action$.ofType(actions.LOAD_USER_PAGE)
     .mergeMap(action => Observable.merge(
-      api.fetchUser(action.login)
-        .then(result => {
-          if (result.response) {
-            return user.success(action.login, result.response);
-          } else if (result.error) {
-            return user.failure(action.login, result.error);
-          }
-        }),
-      api.fetchStarred(firstPageStarredUrl(action.login))
-        .then(result => {
-          if (result.response) {
-            return starred.success(action.login, result.response);
-          } else if (result.error) {
-            return starred.failure(action.login, result.error);
-          }
-        }),
+      fetchUser(action.login),
+      fetchStarred(action.login, firstPageStarredUrl(action.login)),
     ));
 
 export default combineEpics(
