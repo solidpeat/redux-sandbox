@@ -27,11 +27,38 @@ const fetchRepo = fetchEntity.bind(null, repo, api.fetchRepo);
 const fetchStarred = fetchEntity.bind(null, starred, api.fetchStarred);
 const fetchStargazers = fetchEntity.bind(null, stargazers, api.fetchStargazers);
 
-const loadUserPage = action$ =>
+const loadUser = (action, store) =>
+  Observable.of(action)
+    .filter(action => {
+      const gotUser = getUser(store.getState(), action.login);
+      return (
+        !gotUser
+        || action.requiredFields.some(key =>
+          !Object.prototype.hasOwnProperty.call(gotUser, key))
+      );
+    })
+    .mergeMap(action =>
+      fetchUser(action.login));
+
+const loadStarred = (action, store, loadMore) =>
+  Observable.of(action)
+    .filter(action => {
+      const starredByUser = getStarredByUser(store.getState(), action.login);
+      return !starredByUser || !starredByUser.pageCount || loadMore;
+    })
+    .mergeMap(action => {
+      const starredByUser = getStarredByUser(store.getState(), action.login);
+      return fetchStarred(
+        action.login,
+        starredByUser.nextPageUrl || firstPageStarredUrl(action.login),
+      );
+    });
+
+const loadUserPage = (action$, store) =>
   action$.ofType(actions.LOAD_USER_PAGE)
     .mergeMap(action => Observable.merge(
-      fetchUser(action.login),
-      fetchStarred(action.login, firstPageStarredUrl(action.login)),
+      loadUser(action, store),
+      loadStarred(action, store),
     ));
 
 export default combineEpics(
