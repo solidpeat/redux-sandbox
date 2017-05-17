@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Panel, Button } from 'react-bootstrap';
 import Product from './Product';
 
@@ -10,7 +11,7 @@ const ProductItem = ({ product, onAddToCartClicked }) => (
     />
     <Button
       onClick={onAddToCartClicked}
-      disabled={product.inventory > 0 ? '' : 'disabled'}
+      disabled={!product.inventory > 0}
     >
       {product.inventory > 0 ? 'カートに入れる' : '売り切れ'}
     </Button>
