@@ -25,7 +25,7 @@ const Cart = ({ products, total, onCheckoutClicked }) => {
       <Button
         bsStyle="success"
         onClick={onCheckoutClicked}
-        disabled={hasProducts ? '' : 'disabled'}
+        disabled={!hasProducts}
       >
         購入
       </Button>

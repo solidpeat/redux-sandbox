@@ -1,40 +1,30 @@
-import shop from '../api/shop';
 import * as types from '../constants/ActionTypes';
 
-const receiveProducts = products => ({
+export const receiveProducts = products => ({
   type: types.RECEIVE_PRODUCTS,
   products,
 });
 
-export const getAllProducts = () => (dispatch) => {
-  shop.getProducts((products) => {
-    dispatch(receiveProducts(products));
-  });
-};
+export const getAllProducts = () => ({
+  type: types.GET_ALL_PRODUCTS,
+});
 
-const addToCartUnsafe = productId => ({
+export const addToCartUnsafe = productId => ({
+  type: types.ADD_TO_CART_UNSAFE,
+  productId,
+});
+
+export const addToCart = productId => ({
   type: types.ADD_TO_CART,
   productId,
 });
 
-export const addToCart = productId => (dispatch, getState) => {
-  if (getState().products.byId[productId].inventory > 0) {
-    dispatch(addToCartUnsafe(productId));
-  }
-};
+export const checkout = products => ({
+  type: types.CHECKOUT_REQUEST,
+  products,
+});
 
-export const checkout = products => (dispatch, getState) => {
-  const { cart } = getState();
-
-  dispatch({
-    type: types.CHECKOUT_REQUEST,
-  });
-  shop.buyProducts(products, () => {
-    dispatch({
-      type: types.CHECKOUT_SUCCESS,
-      cart,
-    });
-    // Replace the line above with line below to rollback on failure:
-    // dispatch({ type: types.CHECKOUT_FAILURE, cart });
-  });
-};
+export const checkoutSuccess = cart => ({
+  type: types.CHECKOUT_SUCCESS,
+  cart,
+});

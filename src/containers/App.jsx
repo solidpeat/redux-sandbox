@@ -1,16 +1,20 @@
+import 'rxjs';
 import React from 'react';
 import { render } from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
+import { createEpicMiddleware } from 'redux-observable';
 import createLogger from 'redux-logger';
 
 import reducer from '../reducers';
+import rootEpic from '../epics';
+
 import { getAllProducts } from '../actions';
+
 import ProductsContainer from '../containers/ProductsContainer';
 import CartContainer from '../containers/CartContainer';
 
-const middleware = [thunk, createLogger()];
+const middleware = [createEpicMiddleware(rootEpic), createLogger()];
 const store = createStore(
   reducer,
   applyMiddleware(...middleware),
