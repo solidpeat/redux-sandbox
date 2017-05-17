@@ -1,5 +1,10 @@
 import { combineReducers } from 'redux';
-import { RECEIVE_PRODUCTS, ADD_TO_CART_UNSAFE } from '../constants/ActionTypes';
+import {
+  RECEIVE_PRODUCTS,
+  ADD_TO_CART_UNSAFE,
+  GET_ALL_PRODUCTS_START,
+  GET_ALL_PRODUCTS_FINISH,
+} from '../constants/ActionTypes';
 
 const products = (state, action) => {
   switch (action.type) {
@@ -49,9 +54,21 @@ const visibleIds = (state = [], action) => {
   }
 };
 
+const requestCount = (state = 0, action) => {
+  switch (action.type) {
+    case GET_ALL_PRODUCTS_START:
+      return state + 1;
+    case GET_ALL_PRODUCTS_FINISH:
+      return state - 1;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   byId,
   visibleIds,
+  requestCount,
 });
 
 export const getProduct = (state, id) =>

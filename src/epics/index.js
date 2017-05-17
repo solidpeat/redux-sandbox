@@ -7,8 +7,18 @@ import shop from '../api/shop';
 
 const getAllProductsEpic = action$ =>
   action$.ofType(types.GET_ALL_PRODUCTS)
-    .mergeMap(_ => Observable.bindCallback(shop.getProducts)())
-    .map(actions.receiveProducts);
+    // .switchMap(_ => Observable.concat(
+    // concatMapでも問題なさそうやけど
+    .mergeMap(_ => Observable.concat( // こっちはconcatじゃないとだめ
+      Observable.of(actions.getAllProductsStart()),
+      Observable.bindCallback(shop.getProducts)()
+        .map(actions.receiveProducts)
+        .takeUntil(action$.ofType(types.GET_ALL_PRODUCTS))
+      ,
+      Observable.of(actions.getAllProductsFinish()),
+    ))
+    // .do(console.log)
+    ;
 
 const addToCartEpic = (action$, store) =>
   action$.ofType(types.ADD_TO_CART)

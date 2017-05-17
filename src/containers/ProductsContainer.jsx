@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addToCart } from '../actions';
+import { addToCart, getAllProducts } from '../actions';
 import { getVisibleProducts } from '../reducers/products';
 import ProductItem from '../components/ProductItem';
 import ProductsList from '../components/ProductsList';
 
-const ProductsContainer = ({ products, addToCartAction }) => (
-  <ProductsList title="商品">
+const ProductsContainer = ({ products, addToCartAction, getAllProductsAction, requestCount }) => (
+  <ProductsList
+    title="商品"
+    getAllProductsAction={getAllProductsAction}
+    requestCount={requestCount}
+  >
     {products.map(product =>
       <ProductItem
         key={product.id}
@@ -30,10 +34,11 @@ ProductsContainer.propTypes = {
 
 const mapStateToProps = state => ({
   products: getVisibleProducts(state.products),
+  requestCount: state.products.requestCount,
 });
 
 // no-shadow に引っかかる（変数名が同じ）ので別名でconnect
 export default connect(
   mapStateToProps,
-  { addToCartAction: addToCart },
+  { addToCartAction: addToCart, getAllProductsAction: getAllProducts },
 )(ProductsContainer);

@@ -9,6 +9,14 @@ export const getAllProducts = () => ({
   type: types.GET_ALL_PRODUCTS,
 });
 
+export const getAllProductsStart = () => ({
+  type: types.GET_ALL_PRODUCTS_START,
+});
+
+export const getAllProductsFinish = () => ({
+  type: types.GET_ALL_PRODUCTS_FINISH,
+});
+
 export const addToCartUnsafe = productId => ({
   type: types.ADD_TO_CART_UNSAFE,
   productId,

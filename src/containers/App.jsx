@@ -14,7 +14,10 @@ import { getAllProducts } from '../actions';
 import ProductsContainer from '../containers/ProductsContainer';
 import CartContainer from '../containers/CartContainer';
 
-const middleware = [createEpicMiddleware(rootEpic), createLogger()];
+const middleware = [
+  createEpicMiddleware(rootEpic),
+  createLogger({collapsed: true}),
+];
 const store = createStore(
   reducer,
   applyMiddleware(...middleware),
